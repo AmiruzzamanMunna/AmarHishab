@@ -19,9 +19,24 @@ Route::get('/', function () {
 
 Route::get('/userLoginPage','User\UserLoginController@userLoginPage')->name('user.userLoginPage');
 Route::get('/userLoginCheck','User\UserLoginController@userLoginCheck')->name('user.userLoginCheck');
-Route::get('/userLogout','User\UserLoginController@userLogout')->name('user.userLogout');
 
-Route::get('/index','User\UserController@index')->name('user.index');
+Route::group(['middleware' => 'UserSess'], function () {
+
+    Route::get('/userLogout','User\UserLoginController@userLogout')->name('user.userLogout');
+
+    Route::get('/index','User\UserController@index')->name('user.index');
+
+    Route::get('/prductBrandIndex','Product\ProductBrandController@prductBrandIndex')->name('user.prductBrandIndex');
+    Route::get('/getAllbrand','Product\ProductBrandController@getAllbrand')->name('user.getAllbrand');
+    Route::post('/insertBrand','Product\ProductBrandController@insertBrand')->name('user.insertBrand');
+    Route::get('/updateData','Product\ProductBrandController@updateData')->name('user.updateData');
+    Route::post('/updateDataStore','Product\ProductBrandController@updateDataStore')->name('user.updateDataStore');
+    Route::post('/deleteData','Product\ProductBrandController@deleteData')->name('user.deleteData');
+    
+});
+
+
+
 
 
 // Admin Panel
