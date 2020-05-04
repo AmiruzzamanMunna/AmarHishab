@@ -26,12 +26,34 @@ Route::group(['middleware' => 'UserSess'], function () {
 
     Route::get('/index','User\UserController@index')->name('user.index');
 
+    // Prodcut Brand
+
     Route::get('/prductBrandIndex','Product\ProductBrandController@prductBrandIndex')->name('user.prductBrandIndex');
     Route::get('/getAllbrand','Product\ProductBrandController@getAllbrand')->name('user.getAllbrand');
     Route::post('/insertBrand','Product\ProductBrandController@insertBrand')->name('user.insertBrand');
     Route::get('/updateData','Product\ProductBrandController@updateData')->name('user.updateData');
     Route::post('/updateDataStore','Product\ProductBrandController@updateDataStore')->name('user.updateDataStore');
     Route::post('/deleteData','Product\ProductBrandController@deleteData')->name('user.deleteData');
+
+    // Product Category
+
+    Route::get('/categoryIndex','Product\ProductCategoryController@categoryIndex')->name('user.categoryIndex');
+    Route::get('/getAllCategoryData','Product\ProductCategoryController@getAllCategoryData')->name('user.getAllCategoryData');
+    Route::post('/insertCategoryName','Product\ProductCategoryController@insertCategoryName')->name('user.insertCategoryName');
+    Route::get('/updateCategory','Product\ProductCategoryController@updateCategory')->name('user.updateCategory');
+    Route::post('/updateCategoryStore','Product\ProductCategoryController@updateCategoryStore')->name('user.updateCategoryStore');
+    Route::post('/deleteCategory','Product\ProductCategoryController@deleteCategory')->name('user.deleteCategory');
+
+    // Product Producer
+
+    Route::get('/producerIndex','Product\ProductProducerCompanyController@producerIndex')->name('user.producerIndex');
+    Route::get('/getAllProductCompany','Product\ProductProducerCompanyController@getAllProductCompany')->name('user.getAllProductCompany');
+    Route::post('/insertCompanyName','Product\ProductProducerCompanyController@insertCompanyName')->name('user.insertCompanyName');
+    Route::get('/updateProducerName','Product\ProductProducerCompanyController@updateProducerName')->name('user.updateProducerName');
+    Route::post('/updateProducerNameStore','Product\ProductProducerCompanyController@updateProducerNameStore')->name('user.updateProducerNameStore');
+    Route::post('/deleteProducerName','Product\ProductProducerCompanyController@deleteProducerName')->name('user.deleteProducerName');
+
+
     
 });
 

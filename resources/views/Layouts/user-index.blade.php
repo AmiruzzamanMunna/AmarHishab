@@ -218,10 +218,10 @@
                                             <a class="nav-link" href="{{route('user.prductBrandIndex')}}">Brand <span class="badge badge-secondary">New</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/general.html">General</a>
+                                            <a class="nav-link" href="{{route('user.categoryIndex')}}">Category</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/carousel.html">Carousel</a>
+                                            <a class="nav-link" href="{{route('user.producerIndex')}}">Producer Company</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="pages/listgroup.html">List Group</a>

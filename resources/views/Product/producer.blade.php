@@ -1,6 +1,6 @@
 @extends('Layouts.user-index')
 @section('title')
-    Product Brand
+    Product Producer Company 
 @endsection
 @section('container')
 
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-6">Product Brand</div>
+                            <div class="col-md-6">Product Producer Comapny</div>
                             <div class="col-md-1 ml-auto"><i @click="openModal()" class="fas fa-user-plus"></i></div>
                         </div>
                     </div>
@@ -31,8 +31,8 @@
                             <tbody>
                                 <tr v-for="(eachdata,index) in valData">
                                     <td>@{{index+1}}</td>
-                                    <td>@{{eachdata.product_brand_name}}</td>
-                                    <td><i class="fas fa-edit" @click="updateModal(eachdata.product_brand_id)"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i @click="deleteData(eachdata.product_brand_id)" class="fas fa-trash"></i></td>
+                                    <td>@{{eachdata.product_producer_name}}</td>
+                                    <td><i class="fas fa-edit" @click="updateModal(eachdata.product_producer_id)"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i @click="deleteData(eachdata.product_producer_id)" class="fas fa-trash"></i></td>
                                 </tr>
                             </tbody>
 
@@ -52,16 +52,16 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Add Brand</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Add Product Producer Company</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="">Brand Name</label>
-                    <input type="text" name="name" id="name" v-model="brandname" class="form-control">
-                    <span id="namespan" style="color:red">Name Can not be Empty</span>
+                    <label for="">Company Name</label>
+                    <input type="text" name="name" id="comname" v-model="comname" class="form-control">
+                    <span id="namespan" style="color:red">Company Name Can not be Empty</span>
                 </div>
             </div>
             <div class="modal-footer">
@@ -87,15 +87,15 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Update Brand</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Update Product Company</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="">Brand Name</label>
-                    <input type="text" name="name" id="brandname" class="form-control">
+                    <label for="">Company Name</label>
+                    <input type="text" name="name" id="updatecomname" class="form-control">
                     <input type="hidden" name="name" id="id"  class="form-control">
                     
                 </div>
@@ -130,8 +130,8 @@
 
         data:{
 
-            brandname:"",
-            updatebrandname:"",
+            comname:"",
+            updatecomname:"",
 
             valData:[],
 
@@ -140,14 +140,14 @@
 
             getAllData:function(){
 
-                axios.get('/getAllbrand').then(({data})=>this.valData=data.data);
+                axios.get('/getAllProductCompany').then(({data})=>this.valData=data.data);
 
             },
             openModal:function(){
 
                 console.log('click');
 
-                $("#name").val("");
+                $("#comname").val("");
 
                 $("#exampleModalCenter").modal('show');
             },
@@ -155,7 +155,7 @@
 
                 console.log('Click');
 
-                if(!this.brandname){
+                if(!this.comname){
 
                     $("#namespan").show();
                 }else{
@@ -166,9 +166,9 @@
             },
             insert:function(){
 
-                axios.post('/insertBrand',{
+                axios.post('/insertCompanyName',{
 
-                    brandname:this.brandname,
+                    comname:this.comname,
 
                 }).catch(function(e){
 
@@ -186,7 +186,7 @@
                 $.ajax({
 
                     type:"get",
-                    url:"{{route('user.updateData')}}",
+                    url:"{{route('user.updateProducerName')}}",
                     data:{
 
                         id:id
@@ -196,21 +196,21 @@
                         $("#exampleModalCenter2").modal('show');
 
                         $("#id").val(id);
-                        $("#brandname").val(data.data.product_brand_name);
+                        $("#updatecomname").val(data.data.product_producer_name);
 
                     }
                 });
             },
             updateData:function(){
 
-                var updatebrandname=$("#brandname").val();
+                var updatecomname=$("#updatecomname").val();
                 var id=$("#id").val();
 
-                this.updatebrandname=updatebrandname;
+                this.updatecomname=updatecomname;
 
-                axios.post('/updateDataStore',{
+                axios.post('/updateProducerNameStore',{
 
-                    name:updatebrandname,
+                    name:updatecomname,
                     id:id,
                 });
 
@@ -220,9 +220,11 @@
             },
             deleteData:function(id){
 
+                console.log(id);
+
                 if(confirm('Are You sure!!')){
 
-                    axios.post('/deleteData',{
+                    axios.post('/deleteProducerName',{
 
                         id:id,
                     });
