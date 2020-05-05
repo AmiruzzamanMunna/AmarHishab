@@ -53,6 +53,16 @@ Route::group(['middleware' => 'UserSess'], function () {
     Route::post('/updateProducerNameStore','Product\ProductProducerCompanyController@updateProducerNameStore')->name('user.updateProducerNameStore');
     Route::post('/deleteProducerName','Product\ProductProducerCompanyController@deleteProducerName')->name('user.deleteProducerName');
 
+    // Product Details
+
+    Route::get('/productDetailsIndex','Product\ProductDetailsController@productDetailsIndex')->name('user.productDetailsIndex');
+    Route::get('/getAllProductDetails','Product\ProductDetailsController@getAllProductDetails')->name('user.getAllProductDetails');
+    Route::get('/getListedProduct','Product\ProductDetailsController@getListedProduct')->name('user.getListedProduct');
+    Route::post('/insertProductDetails','Product\ProductDetailsController@insertProductDetails')->name('user.insertProductDetails');
+    Route::get('/editProductDetails','Product\ProductDetailsController@editProductDetails')->name('user.editProductDetails');
+    Route::post('/editProductDetailsUpdate','Product\ProductDetailsController@editProductDetailsUpdate')->name('user.editProductDetailsUpdate');
+    Route::post('/deleteProductDetailsUpdate','Product\ProductDetailsController@deleteProductDetailsUpdate')->name('user.deleteProductDetailsUpdate');
+
 
     
 });

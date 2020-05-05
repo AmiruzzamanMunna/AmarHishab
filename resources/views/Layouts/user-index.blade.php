@@ -224,7 +224,7 @@
                                             <a class="nav-link" href="{{route('user.producerIndex')}}">Producer Company</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/listgroup.html">List Group</a>
+                                            <a class="nav-link" href="{{route('user.productDetailsIndex')}}">Product Details</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="pages/typography.html">Typography</a>
