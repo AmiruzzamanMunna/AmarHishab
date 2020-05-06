@@ -31,7 +31,6 @@
                                 <th>Company Name</th>
                                 <th>Product Name</th>
                                 <th>Available</th>
-                                <th>Purchase</th>
                                 <th>Action</th>
                             </thead>
 
@@ -41,9 +40,8 @@
                                     <td>@{{eachdata.product_brand_name}}</td>
                                     <td>@{{eachdata.product_producer_name}}</td>
                                     <td>@{{eachdata.product_details_name}}</td>
-                                    <td v-if="eachdata.product_details_quantity<10"><div class="row"><div class="col-12"><div class="row"><div class="col-2 m-auto">@{{eachdata.product_details_quantity}}</div><span class="badge badge-danger align-left">Low Quantity</spanle=></div></div></div></td>
+                                    <td v-if="eachdata.product_details_quantity<10"><div class="row"><div class="col-12"><div class="row"><div class="col-3">@{{eachdata.product_details_quantity}}</div><span class="badge badge-danger align-left text-left">Low Quantity</span></div></div></div></td>
                                     <td v-else>@{{eachdata.product_details_quantity}}</td>
-                                    <td class="text-center"><i class="fas fa-cart-plus"></i></td>
                                     <td><i class="fas fa-edit" @click="updateModal(eachdata.product_details_id)"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i @click="deleteData(eachdata.product_details_id)" class="fas fa-trash"></i></td>
                                 </tr>
                             </tbody>

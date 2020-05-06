@@ -64,6 +64,16 @@ Route::group(['middleware' => 'UserSess'], function () {
     Route::post('/deleteProductDetailsUpdate','Product\ProductDetailsController@deleteProductDetailsUpdate')->name('user.deleteProductDetailsUpdate');
 
 
+    // Customer
+
+    Route::get('/customerDetails','Customer\CustomerController@customerDetails')->name('user.customerDetails');
+    Route::get('/getAllCustomer','Customer\CustomerController@getAllCustomer')->name('user.getAllCustomer');
+    Route::post('/insertCustomerDetails','Customer\CustomerController@insertCustomerDetails')->name('user.insertCustomerDetails');
+    Route::get('/editCustomerDetails','Customer\CustomerController@editCustomerDetails')->name('user.editCustomerDetails');
+    Route::post('/editCustomerDetailsUpdate','Customer\CustomerController@editCustomerDetailsUpdate')->name('user.editCustomerDetailsUpdate');
+    Route::post('/deleteCustomerDetailsUpdate','Customer\CustomerController@deleteCustomerDetailsUpdate')->name('user.deleteCustomerDetailsUpdate');
+
+
     
 });
 
