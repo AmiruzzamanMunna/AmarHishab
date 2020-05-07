@@ -227,7 +227,7 @@
 
             getAllData:function(){
 
-                axios.get('/getAllProductDetails').then(({data})=>this.valData=data.data);
+                axios.get('/productgetAllProductDetails').then(({data})=>this.valData=data.data);
 
             },
             openModal:function(){

@@ -8,6 +8,7 @@ use App\ProductDetails;
 use App\ProductBrand;
 use App\ProductProducerCompany;
 use App\ProductCategory;
+use DB;
 
 class ProductDetailsController extends Controller
 {
@@ -17,12 +18,31 @@ class ProductDetailsController extends Controller
     }
     public function getAllProductDetails(Request $request)
     {
-        $data=ProductDetails::where('product_details_user_id',$request->session()->get('loggedUser'))
-                            ->where('product_details_is_deleted',0)
-                            ->leftjoin('amar_product_brand','amar_product_brand.product_brand_id','amar_product_details.product_details_brand_id')
-                            ->leftjoin('amar_product_producer','amar_product_producer.product_producer_id','amar_product_details.product_details_com_id')
-                            ->leftjoin('amar_product_category','amar_product_category.product_category_id','amar_product_details.product_details_product_cat_id')
-                            ->get();
+
+        $useid=$request->session()->get('loggedUser');
+        $data=DB::select("
+
+                SELECT 
+                product_details_id,
+                product_brand_name,
+                product_producer_name,
+                product_details_name,
+                ((product_details_quantity) - (IFNULL(product_purchase_quantity, 0))) AS product_details_quantity
+            FROM
+                amar_product_details
+                    LEFT JOIN
+                amar_product_purchase ON amar_product_purchase.product_purchase_product_id = amar_product_details.product_details_id
+                    LEFT JOIN
+                amar_product_brand ON amar_product_brand.product_brand_id = amar_product_details.product_details_brand_id
+                    LEFT JOIN
+                amar_product_producer ON amar_product_producer.product_producer_id = amar_product_details.product_details_com_id
+                    LEFT JOIN
+                amar_product_category ON amar_product_category.product_category_id = amar_product_details.product_details_product_cat_id
+            WHERE
+                product_details_user_id = $useid
+            GROUP BY product_details_id
+
+        ");
 
         return response()->json(array('data'=>$data));
     }

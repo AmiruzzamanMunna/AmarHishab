@@ -56,7 +56,7 @@ Route::group(['middleware' => 'UserSess'], function () {
     // Product Details
 
     Route::get('/productDetailsIndex','Product\ProductDetailsController@productDetailsIndex')->name('user.productDetailsIndex');
-    Route::get('/getAllProductDetails','Product\ProductDetailsController@getAllProductDetails')->name('user.getAllProductDetails');
+    Route::get('/productgetAllProductDetails','Product\ProductDetailsController@getAllProductDetails')->name('user.getAllProductDetails');
     Route::get('/getListedProduct','Product\ProductDetailsController@getListedProduct')->name('user.getListedProduct');
     Route::post('/insertProductDetails','Product\ProductDetailsController@insertProductDetails')->name('user.insertProductDetails');
     Route::get('/editProductDetails','Product\ProductDetailsController@editProductDetails')->name('user.editProductDetails');
@@ -72,6 +72,12 @@ Route::group(['middleware' => 'UserSess'], function () {
     Route::get('/editCustomerDetails','Customer\CustomerController@editCustomerDetails')->name('user.editCustomerDetails');
     Route::post('/editCustomerDetailsUpdate','Customer\CustomerController@editCustomerDetailsUpdate')->name('user.editCustomerDetailsUpdate');
     Route::post('/deleteCustomerDetailsUpdate','Customer\CustomerController@deleteCustomerDetailsUpdate')->name('user.deleteCustomerDetailsUpdate');
+
+
+    // Customer Purchase
+
+    Route::get('/getAllProductDetails','Customer\PurchaseController@getAllProductDetails')->name('user.getAllProductDetails');
+    Route::get('/getAvailableProduct','Customer\PurchaseController@getAvailableProduct')->name('user.getAvailableProduct');
 
 
     

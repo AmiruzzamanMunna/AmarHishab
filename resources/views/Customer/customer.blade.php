@@ -6,8 +6,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 @endsection
 @section('container')
-
 <div class="dashboard-ecommerce" id="showData">
+    <div class="modal fade bd-example-modal-lg" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Customer Purchasing Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <input type="hidden" name="" id="idVal" value="0">
+                            <div class="row">
+                                <div class="col-md-6">Product Details Add</div>
+                                <div class="col-2 ml-auto"><i @click="appendData()" class="fas fa-plus-circle"></i></div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-responsive-md">
+                                <thead>
+                                    <th>Sl No</th>
+                                    <th>Product Name</th>
+                                    <th>Available</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody id="appendDataShow">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" @click="updateData" class="btn btn-primary">Save changes</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
     <div class="container-fluid dashboard-content ">
         <!-- ============================================================== -->
         <!-- pageheader  -->
@@ -18,8 +59,12 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-6">Customer Details</div>
-                            <div class="col-md-1 ml-auto"><i @click="openModal()" class="fas fa-user-plus"></i></div>
+                            <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">Customer Details</div>
+                                    <div class="col-md-5 col-sm-2 col-xl-1 col-lg-1 ml-auto"><i @click="openModal()" class="fas fa-plus-circle"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -42,7 +87,7 @@
                                     <td>@{{eachdata.customer_details_address}}</td>
                                     <td>@{{eachdata.customer_details_phn}}</td>
                                     <td>@{{eachdata.customer_type_name}}</td>
-                                    <td class="text-center"><i class="fas fa-cart-plus"></i></i></td>
+                                    <td class="text-center"><i @click="purchaseModal(eachdata.customer_details_id)" class="fas fa-cart-plus"></i></i></td>
                                     <td><i class="fas fa-edit" @click="updateModal(eachdata.customer_details_id)"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i @click="deleteData(eachdata.customer_details_id)" class="fas fa-trash"></i></td>
                                 </tr>
                             </tbody>
@@ -58,6 +103,7 @@
         <!-- ============================================================== -->
     </div>
 </div>
+
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -168,6 +214,11 @@
         </>
     </div>
 </div>
+<!-- Large modal -->
+
+
+
+
 
 <script>
 
@@ -355,9 +406,66 @@
 
                     return;
                 }
+                
+            },
+            purchaseModal:function(id){
+
+                console.log(id);
+
+                $("#exampleModalCenter3").modal('show');
+                id=$("#idVal").val(0);
+                $("#appendDataShow").html('');
+
+            },
+            appendData:function(){
+
+                console.log('click');
+
+                $.ajax({
+
+                    type:'get',
+                    url:"{{route('user.getAllProductDetails')}}",
+                    success:function(data){
+
+                        console.log(data);
+
+                        id=$("#idVal").val();
+                        id++;
+
+                        var html='';
+                        var option='<option>Select</option>';
+
+                        html+='<tr id="remove'+id+'">'
+                        html+='<td>'+id+'</td>'
+                        html+='<td><select class="form-control" name="product_id[]" id="product_id'+id+'" onchange="getAvailable('+id+')"></select></td>'
+                        html+='<td><input type="text" id="available'+id+'" class="form-control"></td>'
+                        html+='<td><input type="text" id="amount'+id+'" class="form-control"></td>'
+                        html+='<td><i class="fas fa-minus-circle" onclick="removeData('+id+')"></i></td>'
+                        html+='<tr>'
+                        html+='</tr>'
+
+                        for($i=0;$i<data.data.length;$i++){
+
+                            option+='<option value="'+data.data[$i].product_details_id+'">'+data.data[$i].product_details_name+'</option>';
+
+
+                        }
+                        
+
+                        $("#appendDataShow").append(html);
+                        $("#product_id"+id).html(option);
+
+                        id=$("#idVal").val(id);
+                    },
+                    error:function(error){
+
+                        console.log(error);
+                    }
+                });
 
                 
-            }
+            },
+            
 
         },
         mounted:function(){
@@ -368,6 +476,49 @@
         }
 
     });
+
+    var i=0;
+    function removeData(id){
+
+        console.log(id)
+        i++;
+        
+        $("#remove"+id).remove();
+        console.log('remove'+id);
+        // id=$("#idVal").val(id-i);
+    }
+
+    function getAvailable(id){
+
+        var product_id=$("#product_id"+id).val();
+
+        console.log(product_id);
+
+        $.ajax({
+
+            type:'get',
+            url:"{{route('user.getAvailableProduct')}}",
+            data:{
+
+                id:product_id,
+            },
+            success:function(data){
+
+                for($i=0;$i<data.data.length;$i++){
+
+                    $("#available"+id).val(data.data[$i].availablequantity);
+                    $("#amount"+id).val(data.data[$i].product_details_purchase_amount);
+
+                }
+
+                
+            },
+            error:function(error){
+
+                console.log(error);
+            }
+        });
+    }
 </script>
 
     
