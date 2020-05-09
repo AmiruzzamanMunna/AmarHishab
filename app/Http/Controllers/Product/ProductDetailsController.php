@@ -27,7 +27,7 @@ class ProductDetailsController extends Controller
                 product_brand_name,
                 product_producer_name,
                 product_details_name,
-                ((product_details_quantity) - (IFNULL(product_purchase_quantity, 0))) AS product_details_quantity
+                product_details_quantity
             FROM
                 amar_product_details
                     LEFT JOIN

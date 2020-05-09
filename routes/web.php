@@ -76,8 +76,20 @@ Route::group(['middleware' => 'UserSess'], function () {
 
     // Customer Purchase
 
-    Route::get('/getAllProductDetails','Customer\PurchaseController@getAllProductDetails')->name('user.getAllProductDetails');
+    // Route::get('/getAllProductDetails','Customer\PurchaseController@getAllProductDetails')->name('user.getAllProductDetails');
     Route::get('/getAvailableProduct','Customer\PurchaseController@getAvailableProduct')->name('user.getAvailableProduct');
+
+    Route::get('/purchasingIndex','Customer\PurchaseController@purchasingIndex')->name('user.purchasingIndex');
+    Route::post('/storePurchasingDetails','Customer\PurchaseController@storePurchasingDetails')->name('user.storePurchasingDetails');
+    Route::post('/getCustomerPurchaseDetails','Customer\PurchaseController@getCustomerPurchaseDetails')->name('user.getCustomerPurchaseDetails');
+
+
+
+    // Customer Purchase Details
+
+    Route::get('/customerPurchaseDetails','Customer\PurchaseDetailsController@customerPurchaseDetails')->name('user.customerPurchaseDetails');
+    Route::post('/customer/customerPurchaseGet','Customer\PurchaseDetailsController@customerPurchaseGet')->name('user.customerPurchaseGet');
+    Route::get('/customer/customerDetailsIdWise','Customer\PurchaseDetailsController@customerDetailsIdWise')->name('user.customerDetailsIdWise');
 
 
     

@@ -246,9 +246,6 @@
                                             <a class="nav-link" href="{{route('user.customerDetails')}}">Customer Details</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/chart-chartist.html">Chartist Charts</a>
-                                        </li>
-                                        <li class="nav-item">
                                             <a class="nav-link" href="pages/chart-charts.html">Chart</a>
                                         </li>
                                         <li class="nav-item">
@@ -264,14 +261,14 @@
                                 </div>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fab fa-fw fa-wpforms"></i>Forms</a>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fab fa-fw fa-wpforms"></i>Purchase</a>
                                 <div id="submenu-4" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/form-elements.html">Form Elements</a>
+                                            <a class="nav-link" href="{{route('user.purchasingIndex')}}">Customer Purchase</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/form-validation.html">Parsely Validations</a>
+                                            <a class="nav-link" href="{{route('user.customerPurchaseDetails')}}">Purchase Details</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="pages/multiselect.html">Multiselect</a>

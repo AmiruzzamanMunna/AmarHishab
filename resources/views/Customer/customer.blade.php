@@ -7,48 +7,7 @@
 @endsection
 @section('container')
 <div class="dashboard-ecommerce" id="showData">
-    <div class="modal fade bd-example-modal-lg" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content modal-lg">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Customer Purchasing Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="card-header">
-                            <input type="hidden" name="" id="idVal" value="0">
-                            <div class="row">
-                                <div class="col-md-6">Product Details Add</div>
-                                <div class="col-2 ml-auto"><i @click="appendData()" class="fas fa-plus-circle"></i></div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered table-responsive-md">
-                                <thead>
-                                    <th>Sl No</th>
-                                    <th>Product Name</th>
-                                    <th>Available</th>
-                                    <th>Price</th>
-                                    <th>Action</th>
-                                </thead>
-                                <tbody id="appendDataShow">
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" @click="updateData" class="btn btn-primary">Save changes</button>
-                </div>
-                
-            </div>
-        </div>
-    </div>
+    
     <div class="container-fluid dashboard-content ">
         <!-- ============================================================== -->
         <!-- pageheader  -->
@@ -76,7 +35,6 @@
                                 <th>Address</th>
                                 <th>Phone</th>
                                 <th>Type</th>
-                                <th>Purchase</th>
                                 <th>Action</th>
                             </thead>
 
@@ -87,7 +45,6 @@
                                     <td>@{{eachdata.customer_details_address}}</td>
                                     <td>@{{eachdata.customer_details_phn}}</td>
                                     <td>@{{eachdata.customer_type_name}}</td>
-                                    <td class="text-center"><i @click="purchaseModal(eachdata.customer_details_id)" class="fas fa-cart-plus"></i></i></td>
                                     <td><i class="fas fa-edit" @click="updateModal(eachdata.customer_details_id)"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i @click="deleteData(eachdata.customer_details_id)" class="fas fa-trash"></i></td>
                                 </tr>
                             </tbody>
