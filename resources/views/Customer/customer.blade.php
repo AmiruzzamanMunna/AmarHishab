@@ -210,7 +210,7 @@
                 console.log('click');
 
                 var name=$("#pname").val("");
-                var address=$("#address").val("0");
+                var address=$("#address").val("");
                 var phn=$("#phn").val("");
 
                 $("#exampleModalCenter").modal('show');

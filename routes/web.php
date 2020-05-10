@@ -90,6 +90,16 @@ Route::group(['middleware' => 'UserSess'], function () {
     Route::get('/customerPurchaseDetails','Customer\PurchaseDetailsController@customerPurchaseDetails')->name('user.customerPurchaseDetails');
     Route::post('/customer/customerPurchaseGet','Customer\PurchaseDetailsController@customerPurchaseGet')->name('user.customerPurchaseGet');
     Route::get('/customer/customerDetailsIdWise','Customer\PurchaseDetailsController@customerDetailsIdWise')->name('user.customerDetailsIdWise');
+    Route::get('/customer/purchasingRemovingDetails','Customer\PurchaseDetailsController@purchasingRemovingDetails')->name('user.purchasingRemovingDetails');
+    Route::post('/customer/updatePurchasingDetails','Customer\PurchaseDetailsController@updatePurchasingDetails')->name('user.updatePurchasingDetails');
+
+
+    // Report 
+
+    Route::get('/customerdailyReport','Report\ReportController@dailyReportIndex')->name('user.dailyReportIndex');
+    Route::get('/customer/dailyReport','Report\ReportController@dailyReport')->name('user.dailyReport');
+    Route::get('/customermonthlyReportIndex','Report\ReportController@monthlyReportIndex')->name('user.monthlyReportIndex');
+    Route::post('/customermonthly/Report','Report\ReportController@monthlyReport')->name('user.monthlyReport');
 
 
     

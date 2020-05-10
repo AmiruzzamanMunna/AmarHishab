@@ -226,15 +226,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('user.productDetailsIndex')}}">Product Details</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/typography.html">Typography</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/accordions.html">Accordions</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/tabs.html">Tabs</a>
-                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </li>
@@ -245,18 +237,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('user.customerDetails')}}">Customer Details</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/chart-charts.html">Chart</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/chart-morris.html">Morris</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/chart-sparkline.html">Sparkline</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/chart-gauge.html">Guage</a>
-                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </li>
@@ -270,27 +251,18 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('user.customerPurchaseDetails')}}">Purchase Details</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/multiselect.html">Multiselect</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/datepicker.html">Date Picker</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/bootstrap-select.html">Bootstrap Select</a>
-                                        </li>
                                     </ul>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="fas fa-fw fa-table"></i>Tables</a>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="fas fa-fw fa-table"></i>Report</a>
                                 <div id="submenu-5" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/general-table.html">General Tables</a>
+                                            <a class="nav-link" href="{{route('user.dailyReportIndex')}}">Daily Report</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/data-tables.html">Data Tables</a>
+                                            <a class="nav-link" href="{{route('user.monthlyReportIndex')}}">Monthly Report</a>
                                         </li>
                                     </ul>
                                 </div>

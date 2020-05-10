@@ -1,6 +1,6 @@
 @extends('Layouts.user-index')
 @section('title')
-    Customer Purchase Details
+    Customer Daily Report 
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
@@ -21,9 +21,8 @@
                         <div class="card-header">
                             <input type="hidden" name="" id="idVal" value="0">
                             <input type="hidden" name="" id="customer_id">
-                            
                             <div class="row">
-                                <div class="col-md-6">Product Details Update</div>
+                                <div class="col-md-6">Product Details Add</div>
                                 <div class="col-2 ml-auto"><i @click="appendData()" class="fas fa-plus-circle"></i></div>
                             </div>
                         </div>
@@ -46,7 +45,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" @click="updateData()" class="btn btn-primary">Save changes</button>
+                    <button type="button" @click="insert()" class="btn btn-primary">Save changes</button>
                 </div>
                 
             </div>
@@ -57,21 +56,6 @@
         <!-- pageheader  -->
         <!-- ============================================================== -->
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-lg-12-col-xl-12">
-                <div class="row">
-                    <div class="col-md-2 col-sm-2 col-xl-2">
-                        <h3>Select Date</h3>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xl-3">
-                        <input type="date" class="form-control" value="{{date('Y-m-d')}}" id="getDate">
-                    </div>
-                    <div class="col-md-3 col-lg-6 col-xl-6 col-sm-3">
-                        <button style="margin-bottom: 5%" @click="getAllData()" class="btn btn-primary col-4">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
                 <div class="card">
@@ -79,14 +63,14 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
                                 <div class="row">
-                                    <div class="col-md-6">Customer Purchasing Details</div>
+
+                                    <div class="col-md-6">Customer Purchase</div>
                                     
                                 </div>
                             </>
                         </div>
                     </div>
                     <div class="card-body">
-                        
                         <table class="table table-bordered table-responsive-md">
 
                             <thead>
@@ -96,7 +80,9 @@
                                 <th>Phone</th>
                                 <th>Type</th>
                                 <th>Purchase Time</th>
-                                <th>Purchasing Details</th>
+                                <th>Purchase Amount Total</th>
+                                <th>Given Amount Total</th> 
+                                <th>Due Amount</th> 
                             </thead>
 
                             <tbody>
@@ -107,7 +93,9 @@
                                     <td>@{{eachdata.customer_details_phn}}</td>
                                     <td>@{{eachdata.customer_type_name}}</td>
                                     <td>@{{eachdata.times}}</td>
-                                    <td class="text-center"><i @click="purchaseModal(eachdata.customer_details_id)" class="fas fa-cart-plus"></i></i></td>
+                                    <td>@{{eachdata.purchasedTotal}}</td>
+                                    <td>@{{eachdata.givenTotal}}</td>
+                                    <td>@{{eachdata.Due}}</td>
                                 </tr>
                             </tbody>
 
@@ -157,10 +145,7 @@
 
             getAllData:function(){
 
-                var date=$("#getDate").val();
-                
-
-                axios.post('/customer/customerPurchaseGet',{date:date}).then(({data})=>this.valData=data.data);
+                axios.get('/customer/dailyReport').then(({data})=>this.valData=data.data);
 
             },
             
@@ -170,75 +155,7 @@
 
                 $("#exampleModalCenter3").modal('show');
                 $("#idVal").val(0);
-                $("#customer_id").val(id);
-                var date=$("#getDate").val();
-
-                $.ajax({
-
-                    type:'get',
-                    url:"{{route('user.customerDetailsIdWise')}}",
-                    data:{
-
-                        id:id,
-                        date:date,
-
-                    },
-                    success:function(data){
-
-                        var html='';
-                        var option='';
-
-                       
-                        for($i=0;$i<data.data.length;$i++){
-
-                            html+='<tr id="remove'+$i+'">';
-                            html+='<td>'+($i+1)+'</td>';
-                            html+='<td><input type="hidden" id="update_product_id'+$i+'" value="'+data.data[$i].product_purchase_product_id+'" name="update_product_id[]"><select class="form-control" id="product_id'+$i+'" onchange="getAvailable('+$i+')"></select><input type="hidden" name="purchase_id[]" id="purchase_id'+$i+'" value="'+data.data[$i].product_purchase_id+'"></td>';
-                            html+='<td id="availableShow'+$i+'"></td>';
-                            html+='<td><input type="text" name="updateQuantity[]" id="available'+$i+'" class="form-control" value="'+data.data[$i].product_purchase_quantity+'"><input type="text" placeholder="New Quantity" name="newQuantity[]" class="form-control"></td>';
-                            html+='<td><input type="text" name="updatePrice[]" id="amount'+$i+'" value="'+data.data[$i].product_purchase_amount+'" class="form-control"></td>';
-                            html+='<td><i class="fas fa-minus-circle" onclick="removeData('+$i+')"></i></td>';
-                            html+='</tr>'; 
-                            id=$("#idVal").val($i);
-
-                        }
-                        $("#appendDataShow").html(html);
-                        for($j=0;$j<data.data.length;$j++){
-
-
-                            for($k=0;$k<data.product.length;$k++){
-
-                                var product_id=data.data[$j].product_purchase_product_id;
-                                if(data.product[$k].product_details_id==product_id){
-
-                                    option+='<option value="'+data.product[$k].product_details_id+'" selected>'+data.product[$k].product_details_name+'</option>';
-                                    
-
-                                }else{
-
-                                    option+='<option value="'+data.product[$k].product_details_id+'">'+data.product[$k].product_details_name+'</option>';
-                                }
-       
-                        
-                            }
-
-                            console.log('j'+$j);
-
-                            $("#product_id"+$j).html(option);
-                            option='';
-
-                        }
-                        
-                        
-                        
-                        
-                        
-                    },
-                    error:function(error){
-
-                        console.log(error);
-                    }
-                });
+                var customer_id=$("#customer_id").val(id);
                 $("#appendDataShow").html('');
 
             },
@@ -291,38 +208,25 @@
 
                 
             },
-            
-            updateData:function(){
-
-                var customer_id=$("#customer_id").val();
-
-                var update_product_id=$("input[name^='update_product_id']").map(function () {return $(this).val();}).get();
-                var purchase_id=$("input[name^='purchase_id']").map(function () {return $(this).val();}).get();
-                var updateQuantity=$("input[name^='updateQuantity']").map(function () {return $(this).val();}).get();
-                var newQuantity=$("input[name^='newQuantity']").map(function () {return $(this).val();}).get();
-                var updatePrice=$("input[name^='updatePrice']").map(function () {return $(this).val();}).get();
+            insert:function(){
 
                 var product_id=$("input[name^='product_all_id']").map(function () {return $(this).val();}).get();
                 var quantity=$("input[name^='quantity']").map(function () {return $(this).val();}).get();
                 var amount=$("input[name^='amount']").map(function () {return $(this).val();}).get();
-                var getDate=$("#getDate").val();
+                var customer_id=$("#customer_id").val();
+               
+               axios.post('/storePurchasingDetails',{
+                   
+                customer_id:customer_id,
+                product_id:product_id,
+                quantity:quantity,
+                amount:amount,
+               }).catch(function(e){
+                   console.log(e);
+               });
 
-                axios.post('/customer/updatePurchasingDetails',{
-                    
-                    customer_id:customer_id,
-                    update_product_id:update_product_id,
-                    purchase_id:purchase_id,
-                    updateQuantity:updateQuantity,
-                    newQuantity:newQuantity,
-                    updatePrice:updatePrice,
-                    product_id:product_id,
-                    quantity:quantity,
-                    amount:amount,
-                    getDate:getDate,
-                });
-
-                $("#exampleModalCenter3").modal('hide');
-                this.getAllData();
+               $("#exampleModalCenter3").modal('hide');
+               this.getAllData();
             }
             
 
@@ -340,37 +244,9 @@
     function removeData(id){
 
         console.log(id)
-        var product_id=$("#product_id"+id).val();
-        var purchase_id=$("#purchase_id"+id).val();
-        var getDate=$("#getDate").val();
-        var customer_id=$("#customer_id").val();
-
-        
-        
         i++;
-
-        $.ajax({
-
-            type:'get',
-            url:"{{route('user.purchasingRemovingDetails')}}",
-            data:{
-
-                product_id:product_id, 
-                id:customer_id, 
-                date:getDate,
-                purchase_id:purchase_id,
-            },
-            success:function(data){
-
-                $("#remove"+id).remove();
-
-            },
-            error:function(error){
-
-            }
-        });
         
-        
+        $("#remove"+id).remove();
         console.log('remove'+id);
         // id=$("#idVal").val(id-i);
     }
@@ -378,15 +254,11 @@
     function getAvailable(id){
 
         var product_id=$("#product_id"+id).val();
-        var update_product_id=$("#product_id"+id).val();
         var arrayData=[];
-        var arrayDataUpdate=[];
 
         arrayData.push(product_id);
 
-
         $("#pid"+id).val(arrayData);
-    
 
         console.log(arrayData);
 

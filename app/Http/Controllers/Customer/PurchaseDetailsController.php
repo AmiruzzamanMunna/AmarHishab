@@ -38,6 +38,7 @@ class PurchaseDetailsController extends Controller
         customer_details_is_deleted = 0
             AND product_purchase_user_id = $userid
             AND product_purchase_date = '$date'
+            AND product_purchase_is_deleted = 0
     GROUP BY customer_details_id
         ");
 
@@ -71,5 +72,97 @@ class PurchaseDetailsController extends Controller
                     
 
         return response()->json(array('data'=>$data,'product'=>$product));
+    }
+    public function updatePurchasingDetails(Request $request)
+    {
+        $product_id=$request->product_id;
+        $customer_id=$request->customer_id;
+        $quantity=$request->quantity;
+        $amount=$request->amount;
+
+        $purchase_id=$request->purchase_id;
+        $update_product_id=$request->update_product_id;
+        $updateQuantity=$request->updateQuantity;
+        $newQuantity=$request->newQuantity;
+        $updatePrice=$request->updatePrice;
+
+        $getDate=$request->getDate;
+
+        if($update_product_id){
+
+            foreach($update_product_id as $key=>$val){
+
+                $productData=ProductDetails::where('product_details_id',$update_product_id[$key])
+                                ->where('product_details_user_id',$request->session()->get('loggedUser'))
+                                ->where('product_details_is_deleted',0)
+                                ->first();
+
+                $data= ProductPurchase::where('product_purchase_id',$purchase_id[$key])
+                                        ->where('product_purchase_date',$getDate)
+                                        ->where('product_purchase_customer_id',$customer_id)
+                                        ->first();
+
+                $data->product_purchase_customer_id=$customer_id;
+                $data->product_purchase_product_id=$update_product_id[$key];
+                if($newQuantity[$key]){
+
+                    $data->product_purchase_quantity=$newQuantity[$key];
+                    $productData->product_details_quantity=$productData->product_details_quantity+$updateQuantity[$key]-$newQuantity[$key];
+                    $productData->save(); 
+
+                }
+                
+                $data->product_purchase_amount=$updatePrice[$key];
+                $data->product_purchase_date=$getDate;
+                $data->product_purchase_is_deleted=0;
+                $data->save();
+                     
+
+            }
+        }
+
+        if($product_id){
+
+            foreach($product_id as $key=>$val){
+
+                $productData=ProductDetails::where('product_details_id',$product_id[$key])
+                                ->where('product_details_user_id',$request->session()->get('loggedUser'))
+                                ->where('product_details_is_deleted',0)
+                                ->first();
+              
+                $data= new ProductPurchase();
+                $data->product_purchase_user_id=$request->session()->get('loggedUser');
+                $data->product_purchase_customer_id=$customer_id;
+                $data->product_purchase_product_id=$product_id[$key];
+                $data->product_purchase_quantity=$quantity[$key];
+                $data->product_purchase_amount=$amount[$key];
+                $data->product_purchase_date=$getDate;
+                $data->product_purchase_is_deleted=0;
+                $data->save();
+                $productData->product_details_quantity=$productData->product_details_quantity-$quantity[$key];
+                $productData->save();
+            }
+
+
+        }
+
+        
+
+        
+    }
+    public function purchasingRemovingDetails(Request $request)
+    {
+
+        $userid=$request->session()->get('loggedUser');
+        $date=$request->date;
+        $data=ProductPurchase::where('product_purchase_user_id',$userid)
+                            ->where('product_purchase_customer_id',$request->id)
+                            ->where('product_purchase_date',$date)
+                            ->where('product_purchase_product_id',$request->product_id)
+                            ->where('product_purchase_id',$request->purchase_id)
+                            ->where('product_purchase_is_deleted',0)
+                            ->update([
+                                'product_purchase_is_deleted'=>1
+                            ]);
     }
 }

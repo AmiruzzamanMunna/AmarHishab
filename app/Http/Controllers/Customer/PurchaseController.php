@@ -64,6 +64,7 @@ class PurchaseController extends Controller
         $customer_id=$request->customer_id;
         $quantity=$request->quantity;
         $amount=$request->amount;
+        $date=$request->date;
 
         
 
@@ -80,7 +81,7 @@ class PurchaseController extends Controller
             $data->product_purchase_product_id=$product_id[$key];
             $data->product_purchase_quantity=$quantity[$key];
             $data->product_purchase_amount=$amount[$key];
-            $data->product_purchase_date=date('Y-m-d');
+            $data->product_purchase_date=$date;
             $data->product_purchase_is_deleted=0;
             $data->save();
             $productData->product_details_quantity=$productData->product_details_quantity-$quantity[$key];

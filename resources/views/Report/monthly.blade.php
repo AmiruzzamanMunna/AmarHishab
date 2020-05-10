@@ -1,6 +1,6 @@
 @extends('Layouts.user-index')
 @section('title')
-    Customer Purchase Details
+    Customer Monthly Details
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
@@ -31,11 +31,14 @@
                             <table class="table table-bordered table-responsive-md">
                                 <thead>
                                     <th>Sl No</th>
-                                    <th>Product Name</th>
-                                    <th>Available</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Action</th>
+                                    <th>Customer Name</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Type</th>
+                                    <th>Purchased Time</th>
+                                    <th>Purchased Amount Total</th>
+                                    <th>Given Amount Total</th> 
+                                    <th>Due Amount</th> 
                                 </thead>
                                 <tbody id="appendDataShow">
                                     
@@ -96,7 +99,9 @@
                                 <th>Phone</th>
                                 <th>Type</th>
                                 <th>Purchase Time</th>
-                                <th>Purchasing Details</th>
+                                <th>Purchase Amount Total</th>
+                                <th>Given Amount Total</th> 
+                                <th>Due Amount</th> 
                             </thead>
 
                             <tbody>
@@ -107,7 +112,9 @@
                                     <td>@{{eachdata.customer_details_phn}}</td>
                                     <td>@{{eachdata.customer_type_name}}</td>
                                     <td>@{{eachdata.times}}</td>
-                                    <td class="text-center"><i @click="purchaseModal(eachdata.customer_details_id)" class="fas fa-cart-plus"></i></i></td>
+                                    <td>@{{eachdata.purchasedTotal}}</td>
+                                    <td>@{{eachdata.givenTotal}}</td>
+                                    <td>@{{eachdata.Due}}</td>
                                 </tr>
                             </tbody>
 
@@ -160,7 +167,7 @@
                 var date=$("#getDate").val();
                 
 
-                axios.post('/customer/customerPurchaseGet',{date:date}).then(({data})=>this.valData=data.data);
+                axios.post('/customermonthly/Report',{date:date}).then(({data})=>this.valData=data.data);
 
             },
             

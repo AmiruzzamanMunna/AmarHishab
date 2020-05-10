@@ -22,7 +22,8 @@
                             <input type="hidden" name="" id="idVal" value="0">
                             <input type="hidden" name="" id="customer_id">
                             <div class="row">
-                                <div class="col-md-6">Product Details Add</div>
+                                <div class="col-md-3">Product Details Add</div>
+                                <div class="col-md-5"><div class="row"><div class="col-md-4"><label for="">Date</label></div><div class="col-md-8"><input type="date" class="form-control" value="{{date('Y-m-d')}}" id="date"></div></div></div>
                                 <div class="col-2 ml-auto"><i @click="appendData()" class="fas fa-plus-circle"></i></div>
                             </div>
                         </div>
@@ -208,10 +209,12 @@
                 var quantity=$("input[name^='quantity']").map(function () {return $(this).val();}).get();
                 var amount=$("input[name^='amount']").map(function () {return $(this).val();}).get();
                 var customer_id=$("#customer_id").val();
+                var date=$("#date").val();
                
                axios.post('/storePurchasingDetails',{
                    
                 customer_id:customer_id,
+                date:date,
                 product_id:product_id,
                 quantity:quantity,
                 amount:amount,
