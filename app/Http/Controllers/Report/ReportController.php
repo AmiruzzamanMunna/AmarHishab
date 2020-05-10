@@ -107,9 +107,7 @@ class ReportController extends Controller
                         AND product_purchase_is_deleted = 0
                 GROUP BY customer_details_id"
         );
-        $file=fopen("H://report.txt","w+");
-        fwrite($file,print_r($data,true).PHP_EOL);
-        fclose($file);
+     
 
         return response()->json(array('data'=>$data));
     }
