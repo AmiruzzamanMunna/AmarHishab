@@ -56,7 +56,7 @@ class PurchaseController extends Controller
     }
     public function purchasingIndex(Request $request)
     {
-        return view("Customer.Purchase");
+        return view("Customer.purchaseIndex");
     }
     public function storePurchasingDetails(Request $request)
     {
