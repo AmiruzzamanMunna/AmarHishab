@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/userLoginPage','User\UserLoginController@userLoginPage')->name('user.userLoginPage');
 Route::get('/userLoginCheck','User\UserLoginController@userLoginCheck')->name('user.userLoginCheck');
@@ -24,7 +24,7 @@ Route::group(['middleware' => 'UserSess'], function () {
 
     Route::get('/userLogout','User\UserLoginController@userLogout')->name('user.userLogout');
 
-    Route::get('/index','User\UserController@index')->name('user.index');
+    Route::get('/','User\UserController@index')->name('user.index');
 
     // Prodcut Brand
 
